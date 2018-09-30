@@ -95,7 +95,7 @@ function admin_load()
                     'n'
                 );
 
-                $listManager = new \amnesia\ListManager([
+                $listManager = new \itscomplicated\ListManager([
                     'mybb' => $mybb,
                     'baseurl' => $pageUrl . '&amp;action=types',
                     'order_columns' => ['id', 'title'],
