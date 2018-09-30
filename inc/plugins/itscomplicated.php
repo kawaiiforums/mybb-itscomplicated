@@ -27,7 +27,7 @@ function itscomplicated_info()
         'description'   => $lang->itscomplicated_description,
         'website'       => '',
         'author'        => 'kawaiiforums',
-        'authorsite'    => 'https://kawaii.io',
+        'authorsite'    => 'https://github.com/kawaiiforums',
         'version'       => '1.0',
         'codename'      => 'itscomplicated',
         'compatibility' => '18*',
