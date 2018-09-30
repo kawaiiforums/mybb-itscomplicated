@@ -132,7 +132,7 @@ class ListManager
         $sql = null;
 
         if ($this->orderColumn && $this->orderDirection) {
-            $sql .= "`" . $this->orderColumn . "` " . strtoupper($this->orderDirection);
+            $sql .= $this->orderColumn . " " . strtoupper($this->orderDirection);
 
             if ($this->orderExtend) {
                 $sql .= ($sql ? ', ' : null) . $this->orderExtend;
