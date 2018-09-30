@@ -11,6 +11,7 @@ function global_start(): void
             if ($mybb->get_input('action') == 'relationships') {
                 \itscomplicated\loadTemplates([
                     'relationships_usercp',
+                    'relationships_usercp_create',
                     'relationships_usercp_none',
                     'relationships_usercp_relationship',
                     'relationships_usercp_relationship_type_option',
@@ -18,6 +19,7 @@ function global_start(): void
                     'relationships_usercp_request_accept',
                     'relationships_usercp_request_cancel',
                     'relationships_usercp_request_ignore',
+                    'relationships_usercp_requests',
                     'relationships_usercp_requests_none',
                 ], 'itscomplicated_');
             }
@@ -208,76 +210,88 @@ function usercp_start(): void
             eval('$relationshipsList = "' . \itscomplicated\tpl('relationships_usercp_none') . '";');
         }
 
-        // create form
-        $relationshipTypeSelectOptions = null;
 
-        $relationshipTypes = \itscomplicated\getRelationshipTypes();
+        if (\itscomplicated\userInRelationshipGroup($mybb->user)) {
+            $relationshipTypeSelectOptions = null;
 
-        foreach ($relationshipTypes as $relationshipType) {
-            $relationshipTypeTitle = \htmlspecialchars_uni(
-                $lang->parse($relationshipType['title'])
-            );
+            $relationshipTypes = \itscomplicated\getRelationshipTypes();
 
-            eval('$relationshipTypeSelectOptions .= "' . \itscomplicated\tpl('relationships_usercp_relationship_type_option') . '";');
-        }
+            foreach ($relationshipTypes as $relationshipType) {
+                $relationshipTypeTitle = \htmlspecialchars_uni(
+                    $lang->parse($relationshipType['title'])
+                );
 
-
-        if ($userRelationships['requests_received']) {
-            $receivedRequests = null;
-
-            foreach ($userRelationships['requests_received'] as $userRelationship) {
-                $relationshipUsers = \itscomplicated\getRelationshipUsers($userRelationship['id']);
-
-                unset($relationshipUsers[$mybb->user['uid']]);
-
-                if (count($relationshipUsers) == 1) {
-                    $relationshipUser = end($relationshipUsers);
-
-                    $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
-
-                    $relationshipTypeTitle = \htmlspecialchars_uni(
-                        $lang->parse($userRelationship['title'])
-                    );
-
-                    $options = null;
-                    eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_accept') . '";');
-                    eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_ignore') . '";');
-
-                    eval('$receivedRequests .= "' . \itscomplicated\tpl('relationships_usercp_request') . '";');
-                }
+                eval('$relationshipTypeSelectOptions .= "' . \itscomplicated\tpl('relationships_usercp_relationship_type_option') . '";');
             }
-        } else {
-            eval('$receivedRequests = "' . \itscomplicated\tpl('relationships_usercp_requests_none') . '";');
-        }
+
+            eval('$createRelationship = "' . \itscomplicated\tpl('relationships_usercp_create') . '";');
 
 
-        if ($userRelationships['requests_sent']) {
-            $sentRequests = null;
+            if ($userRelationships['requests_received']) {
+                $receivedRequests = null;
 
-            foreach ($userRelationships['requests_sent'] as $userRelationship) {
-                $relationshipUsers = \itscomplicated\getRelationshipUsers($userRelationship['id']);
+                foreach ($userRelationships['requests_received'] as $userRelationship) {
+                    $relationshipUsers = \itscomplicated\getRelationshipUsers($userRelationship['id']);
 
-                unset($relationshipUsers[$mybb->user['uid']]);
+                    unset($relationshipUsers[$mybb->user['uid']]);
 
-                if (count($relationshipUsers) == 1) {
-                    $relationshipUser = end($relationshipUsers);
+                    if (count($relationshipUsers) == 1) {
+                        $relationshipUser = end($relationshipUsers);
 
-                    $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+                        $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
 
-                    $relationshipTypeTitle = \htmlspecialchars_uni(
-                        $lang->parse($userRelationship['title'])
-                    );
+                        $relationshipTypeTitle = \htmlspecialchars_uni(
+                            $lang->parse($userRelationship['title'])
+                        );
 
-                    $options = null;
-                    eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_cancel') . '";');
+                        $options = null;
+                        eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_accept') . '";');
+                        eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_ignore') . '";');
 
-                    eval('$sentRequests .= "' . \itscomplicated\tpl('relationships_usercp_request') . '";');
+                        eval('$receivedRequests .= "' . \itscomplicated\tpl('relationships_usercp_request') . '";');
+                    }
                 }
+            } else {
+                eval('$receivedRequests = "' . \itscomplicated\tpl('relationships_usercp_requests_none') . '";');
             }
-        } else {
-            eval('$sentRequests = "' . \itscomplicated\tpl('relationships_usercp_requests_none') . '";');
-        }
 
+
+            if ($userRelationships['requests_sent']) {
+                $sentRequests = null;
+
+                foreach ($userRelationships['requests_sent'] as $userRelationship) {
+                    $relationshipUsers = \itscomplicated\getRelationshipUsers($userRelationship['id']);
+
+                    unset($relationshipUsers[$mybb->user['uid']]);
+
+                    if (count($relationshipUsers) == 1) {
+                        $relationshipUser = end($relationshipUsers);
+
+                        $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+
+                        $relationshipTypeTitle = \htmlspecialchars_uni(
+                            $lang->parse($userRelationship['title'])
+                        );
+
+                        $options = null;
+                        eval('$options .= "' . \itscomplicated\tpl('relationships_usercp_request_cancel') . '";');
+
+                        eval('$sentRequests .= "' . \itscomplicated\tpl('relationships_usercp_request') . '";');
+                    }
+                }
+            } else {
+                eval('$sentRequests = "' . \itscomplicated\tpl('relationships_usercp_requests_none') . '";');
+            }
+
+            eval('$relationshipRequests = "' . \itscomplicated\tpl('relationships_usercp_requests') . '";');
+
+            $message = null;
+        } else {
+            $createRelationship = null;
+            $relationshipRequests = null;
+
+            $message = $lang->itscomplicated_relationships_error_initiating_user_in_group;
+        }
 
         eval('$page = "' . \itscomplicated\tpl('relationships_usercp') . '";');
 

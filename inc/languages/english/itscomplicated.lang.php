@@ -26,7 +26,7 @@ $l['itscomplicated_relationships_relationship_ended'] = 'Relationship has been r
 
 $l['itscomplicated_relationships_error_user_not_found'] = 'Selected user could not be found.';
 $l['itscomplicated_relationships_error_not_with_self'] = 'You cannot declare relationships with yourself.';
-$l['itscomplicated_relationships_error_initiating_user_in_group'] = 'You cannot currently send relationship requests.';
+$l['itscomplicated_relationships_error_initiating_user_in_group'] = 'You cannot currently send or receive relationship requests.';
 $l['itscomplicated_relationships_error_receiving_user_in_group'] = 'The selected user cannot currently accept relationship requests.';
 $l['itscomplicated_relationships_error_initiating_user_under_limit'] = 'You cannot request a relationship because your relationships limit has been reached.';
 $l['itscomplicated_relationships_error_receiving_user_under_limit'] = 'You cannot request a relationship with selected user because their relationships limit has been reached.';
