@@ -1,0 +1,1 @@
+<a href="usercp.php?action=relationships&accept_request={$userRelationship['id']}&my_post_key={$mybb->post_code}" onclick="return confirm(itscomplicated_relationships_request_accept_confirm)">{$lang->itscomplicated_relationships_request_accept}</a> &dash;

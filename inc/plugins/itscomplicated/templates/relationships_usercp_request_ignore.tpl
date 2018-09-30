@@ -1,0 +1,1 @@
+<a href="usercp.php?action=relationships&remove_request={$userRelationship['id']}&my_post_key={$mybb->post_code}">{$lang->itscomplicated_relationships_request_ignore}</a>

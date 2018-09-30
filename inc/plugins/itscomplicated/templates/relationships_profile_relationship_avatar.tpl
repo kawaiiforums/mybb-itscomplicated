@@ -1,0 +1,1 @@
+<img src="{$useravatar['image']}" alt="" {$useravatar['width_height']} style="vertical-align: middle;" />
