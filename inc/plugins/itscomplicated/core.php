@@ -190,7 +190,7 @@ function userOnIgnoreList(int $subjectUserId, $receivingUser): bool
 
     return (
         !empty($receivingUser['ignorelist']) &&
-        strpos(',' . $receivingUser['ignorelist'] . ',', ',' . $subjectUserId . ',')
+        strpos(',' . $receivingUser['ignorelist'] . ',', ',' . $subjectUserId . ',') !== false
     );
 }
 
