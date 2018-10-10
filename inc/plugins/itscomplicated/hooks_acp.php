@@ -71,7 +71,7 @@ function admin_load()
                         $form_container = new \FormContainer($lang->itscomplicated_admin_relationships_types_update);
                         $form_container->output_row(
                             $lang->itscomplicated_admin_relationships_name,
-                            '',
+                            $lang->itscomplicated_admin_relationships_name_description,
                             $form->generate_text_box('name', $relationshipType['name'])
                         );
                         $form_container->output_row(
