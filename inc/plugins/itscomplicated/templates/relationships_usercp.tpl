@@ -16,11 +16,12 @@
 
                 <table border="0" cellspacing="{$theme['borderwidth']}" cellpadding="{$theme['tablespace']}" class="tborder">
                     <tr>
-                        <td class="thead" colspan="3"><strong>{$currentRelationships}</strong></td>
+                        <td class="thead" colspan="4"><strong>{$currentRelationships}</strong></td>
                     </tr>
                     <tr>
                         <td class="tcat" style="text-align: center;"><strong>{$lang->itscomplicated_relationships_user}</strong></td>
                         <td class="tcat" style="text-align: center;"><strong>{$lang->itscomplicated_relationships_type}</strong></td>
+                        <td class="tcat" style="text-align: center;"><strong>{$lang->itscomplicated_relationships_date_start}</strong></td>
                         <td class="tcat" style="text-align: center;"><strong>{$lang->options}</strong></td>
                     </tr>
                     {$relationshipsList}

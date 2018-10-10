@@ -203,6 +203,8 @@ function usercp_start(): void
                         $lang->parse($userRelationship['title'])
                     );
 
+                    $relationshipDateStart = \my_date($mybb->settings['dateformat'], $userRelationship['date_start']);
+
                     eval('$relationshipsList .= "' . \itscomplicated\tpl('relationships_usercp_relationship') . '";');
                 }
             }

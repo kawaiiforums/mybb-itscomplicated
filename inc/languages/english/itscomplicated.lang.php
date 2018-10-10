@@ -11,6 +11,7 @@ $l['itscomplicated_relationships_none'] = 'You currently do not have any declare
 $l['itscomplicated_relationships_requests_none'] = 'No requests found.';
 $l['itscomplicated_relationships_user'] = 'User';
 $l['itscomplicated_relationships_type'] = 'Type';
+$l['itscomplicated_relationships_date_start'] = 'Since';
 $l['itscomplicated_relationships_request'] = 'Send Request';
 $l['itscomplicated_relationships_end'] = 'End Relationship';
 $l['itscomplicated_relationships_request_accept'] = 'Accept';
