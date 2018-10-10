@@ -46,11 +46,21 @@ $l['itscomplicated_relationships_notification_request_accepted_message'] = '{1} 
 $l['itscomplicated_relationships_notification_relationship_ended'] = 'Relationship ended';
 $l['itscomplicated_relationships_notification_relationship_ended_message'] = '{1} has ended a relationship with you: {2}.';
 
+$l['itscomplicated_relationships_in_relationship_with'] = '{1} ({2}) since {3}';
+
 $l['itscomplicated_relationships_type_relationship'] = 'Relationship';
+$l['itscomplicated_relationships_type_relationship_to'] = 'In a relationship with {1} since {3}';
 $l['itscomplicated_relationships_type_civilunion'] = 'Civil Union';
+$l['itscomplicated_relationships_type_civilunion_to'] = 'In a civil union with {1} since {3}';
 $l['itscomplicated_relationships_type_engaged'] = 'Engaged';
+$l['itscomplicated_relationships_type_engaged_to'] = 'Engaged to {1} since {3}';
 $l['itscomplicated_relationships_type_married'] = 'Married';
+$l['itscomplicated_relationships_type_married_to'] = 'Married to {1} since {3}';
 $l['itscomplicated_relationships_type_separated'] = 'Separated';
+$l['itscomplicated_relationships_type_separated_to'] = 'Separated from {1} since {3}';
 $l['itscomplicated_relationships_type_divorced'] = 'Divorced';
+$l['itscomplicated_relationships_type_divorced_to'] = 'Divorced from {1} since {3}';
 $l['itscomplicated_relationships_type_onabreak'] = 'On a Break';
+$l['itscomplicated_relationships_type_onabreak_to'] = 'On a break with {1} since {3}';
 $l['itscomplicated_relationships_type_itscomplicated'] = 'It\'s Complicated';
+$l['itscomplicated_relationships_type_itscomplicated_to'] = 'In a complicated relationship with {1} since {3}';

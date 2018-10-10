@@ -7,6 +7,7 @@ function addRelationshipType(array $data): int
     global $db;
 
     $db->insert_query('itscomplicated_relationship_types', [
+        'name' => $db->escape_string($data['name']),
         'title' => $db->escape_string($data['title']),
     ]);
 
@@ -50,9 +51,17 @@ function updateRelationshipTypeById(int $id, array $data): bool
 {
     global $db;
 
-    return (bool)$db->update_query('itscomplicated_relationship_types', [
-        'title' => $db->escape_string($data['title']),
-    ], 'id=' . (int)$id);
+    $updates = [];
+
+    if (isset($data['name'])) {
+        $updates['name'] = $db->escape_string($data['name']);
+    }
+
+    if (isset($data['title'])) {
+        $updates['title'] = $db->escape_string($data['title']);
+    }
+
+    return (bool)$db->update_query('itscomplicated_relationship_types', $updates, 'id=' . (int)$id);
 }
 
 function deleteRelationshipTypeById(int $id): bool
@@ -274,7 +283,7 @@ function getUserRelationshipsWithTypes(int $userId, bool $activeOnly = false): a
 
     $query = $db->query("
         SELECT
-            r.*, ru.*, rt.title
+            r.*, ru.*, rt.name, rt.title
         FROM
             " . TABLE_PREFIX . "itscomplicated_relationships_users ru
             INNER JOIN " . TABLE_PREFIX . "itscomplicated_relationships r ON ru.relationship_id = r.id

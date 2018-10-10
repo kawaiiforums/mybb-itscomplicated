@@ -25,6 +25,7 @@ function admin_load()
         if ($mybb->input['action'] == 'types' || empty($mybb->input['action'])) {
             if ($mybb->request_method == 'post' && $mybb->get_input('add') && !empty(trim($mybb->get_input('title')))) {
                 \itscomplicated\addRelationshipType([
+                    'name' => $mybb->get_input('name'),
                     'title' => $mybb->get_input('title'),
                 ]);
                 \flash_message($lang->itscomplicated_admin_relationships_types_added, 'success');
@@ -56,6 +57,7 @@ function admin_load()
                 if ($relationshipType) {
                     if ($mybb->request_method == 'post') {
                         \itscomplicated\updateRelationshipTypeById($relationshipType['id'], [
+                            'name' => $mybb->get_input('name'),
                             'title' => $mybb->get_input('title'),
                         ]);
                         \flash_message($lang->itscomplicated_admin_relationships_types_updated, 'success');
@@ -67,6 +69,11 @@ function admin_load()
                         $form = new \Form($pageUrl . '&action=types&edit=' . (int)$relationshipType['id'], 'post');
 
                         $form_container = new \FormContainer($lang->itscomplicated_admin_relationships_types_update);
+                        $form_container->output_row(
+                            $lang->itscomplicated_admin_relationships_name,
+                            '',
+                            $form->generate_text_box('name', $relationshipType['name'])
+                        );
                         $form_container->output_row(
                             $lang->itscomplicated_admin_relationships_title,
                             '',
@@ -113,11 +120,16 @@ function admin_load()
                 ");
 
                 $table = new \Table;
-                $table->construct_header($listManager->link('title', $lang->itscomplicated_admin_relationships_title), ['width' => '80%', 'class' => 'align_center']);
+                $table->construct_header($listManager->link('name', $lang->itscomplicated_admin_relationships_name), ['width' => '30%', 'class' => 'align_center']);
+                $table->construct_header($listManager->link('title', $lang->itscomplicated_admin_relationships_title), ['width' => '50%', 'class' => 'align_center']);
                 $table->construct_header($lang->options, ['width' => '20%', 'class' => 'align_center']);
 
                 if ($itemsNum > 0) {
                     while ($row = $db->fetch_array($query)) {
+                        $name = \htmlspecialchars_uni(
+                            $row['name']
+                        );
+
                         $title = \htmlspecialchars_uni(
                             $lang->parse($row['title'])
                         );
@@ -127,12 +139,13 @@ function admin_load()
                         $popup->add_item($lang->delete, $pageUrl . '&amp;delete=' . $row['id']);
                         $controls = $popup->fetch();
 
+                        $table->construct_cell($name, ['class' => 'align_center']);
                         $table->construct_cell($title, ['class' => 'align_center']);
                         $table->construct_cell($controls, ['class' => 'align_center']);
                         $table->construct_row();
                     }
                 } else {
-                    $table->construct_cell($lang->itscomplicated_admin_relationships_types_empty, ['colspan' => '2', 'class' => 'align_center']);
+                    $table->construct_cell($lang->itscomplicated_admin_relationships_types_empty, ['colspan' => '3', 'class' => 'align_center']);
                     $table->construct_row();
                 }
 
@@ -146,6 +159,11 @@ function admin_load()
                 $form = new \Form($pageUrl . '&amp;action=types&amp;add=1', 'post');
 
                 $form_container = new \FormContainer($lang->itscomplicated_admin_relationships_types_add);
+                $form_container->output_row(
+                    $lang->itscomplicated_admin_relationships_name,
+                    $lang->itscomplicated_admin_relationships_name_description,
+                    $form->generate_text_box('name')
+                );
                 $form_container->output_row(
                     $lang->itscomplicated_admin_relationships_title,
                     '',

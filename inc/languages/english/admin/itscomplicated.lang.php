@@ -9,6 +9,8 @@ $l['itscomplicated_admin_relationships'] = 'Relationships';
 $l['itscomplicated_admin_relationships_types'] = 'Relationship Types';
 $l['itscomplicated_admin_relationships_types_description'] = 'Here you can manage available relationship types.';
 
+$l['itscomplicated_admin_relationships_name'] = 'Name';
+$l['itscomplicated_admin_relationships_name_description'] = 'A simplified type ID (letters and numbers only).';
 $l['itscomplicated_admin_relationships_title'] = 'Title';
 $l['itscomplicated_admin_relationships_submit'] = 'Submit';
 

@@ -72,6 +72,23 @@ function member_profile_end(): void
                     $lang->parse($userRelationship['title'])
                 );
 
+                $relationshipDateStart = \my_date($mybb->settings['dateformat'], $userRelationship['date_start']);
+
+                $customNote = &$lang->{'itscomplicated_relationships_type_' . $userRelationship['name'] . '_to'};
+
+                if (isset($customNote)) {
+                    $noteString = $customNote;
+                } else {
+                    $noteString = $lang->itscomplicated_relationships_in_relationship_with;
+                }
+
+                $note = $lang->sprintf(
+                    $noteString,
+                    $username,
+                    $relationshipTypeTitle,
+                    $relationshipDateStart
+                );
+
                 eval('$relationshipsHtml .= "' . \itscomplicated\tpl('relationships_profile_relationship') . '";');
             }
         }

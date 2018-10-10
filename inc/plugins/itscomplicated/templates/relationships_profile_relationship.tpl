@@ -1,5 +1,5 @@
 <tr>
     <td class="trow1">
-        {$avatar} {$username} ({$relationshipTypeTitle})
+        {$avatar} {$note}
     </td>
 </tr>

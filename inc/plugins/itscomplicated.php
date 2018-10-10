@@ -45,6 +45,7 @@ function itscomplicated_install()
             $db->write_query("
                 CREATE TABLE IF NOT EXISTS " . TABLE_PREFIX . "itscomplicated_relationship_types (
                     id serial,
+                    name text NOT NULL,
                     title text NOT NULL,
                     PRIMARY KEY (id)
                 )
@@ -76,6 +77,7 @@ function itscomplicated_install()
             $db->write_query("
                 CREATE TABLE IF NOT EXISTS " . TABLE_PREFIX . "itscomplicated_relationship_types (
                     id integer,
+                    name text NOT NULL,
                     title text NOT NULL,
                     PRIMARY KEY (id)
                 )
@@ -107,6 +109,7 @@ function itscomplicated_install()
             $db->write_query("
                 CREATE TABLE IF NOT EXISTS `" . TABLE_PREFIX . "itscomplicated_relationship_types` (
                     `id` int(11) NOT NULL auto_increment,
+                    `name` varchar(100) NOT NULL,
                     `title` varchar(100) NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB " . $db->build_create_table_collation() . "
@@ -140,21 +143,22 @@ function itscomplicated_install()
     }
 
     $defaultRelatioshipTypeTitles = [
-        '<lang:itscomplicated_relationships_type_relationship>',
-        '<lang:itscomplicated_relationships_type_civilunion>',
-        '<lang:itscomplicated_relationships_type_engaged>',
-        '<lang:itscomplicated_relationships_type_married>',
-        '<lang:itscomplicated_relationships_type_separated>',
-        '<lang:itscomplicated_relationships_type_divorced>',
-        '<lang:itscomplicated_relationships_type_onabreak>',
-        '<lang:itscomplicated_relationships_type_itscomplicated>',
+        'relationship' => '<lang:itscomplicated_relationships_type_relationship>',
+        'civilunion' => '<lang:itscomplicated_relationships_type_civilunion>',
+        'engaged' => '<lang:itscomplicated_relationships_type_engaged>',
+        'married' => '<lang:itscomplicated_relationships_type_married>',
+        'separated' => '<lang:itscomplicated_relationships_type_separated>',
+        'divorced' => '<lang:itscomplicated_relationships_type_divorced>',
+        'onabreak' => '<lang:itscomplicated_relationships_type_onabreak>',
+        'itscomplicated' => '<lang:itscomplicated_relationships_type_itscomplicated>',
     ];
 
     $existingTypeTitles = array_column(\itscomplicated\getRelationshipTypes(), 'title');
 
-    foreach ($defaultRelatioshipTypeTitles as $title) {
+    foreach ($defaultRelatioshipTypeTitles as $name => $title) {
         if (!in_array($title, $existingTypeTitles)) {
             \itscomplicated\addRelationshipType([
+                'name' => $name,
                 'title' => $title,
             ]);
         }
