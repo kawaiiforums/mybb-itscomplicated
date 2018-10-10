@@ -46,7 +46,7 @@ function member_profile_end(): void
 
     $lang->load('itscomplicated');
 
-    $userRelationships = \itscomplicated\getuserrelationshipswithtypes($memprofile['uid'], true);
+    $userRelationships = \itscomplicated\getUserRelationshipsWithTypes($memprofile['uid'], true);
 
     if ($userRelationships) {
         $relationshipsHtml = null;
