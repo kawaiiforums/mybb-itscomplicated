@@ -138,7 +138,14 @@ function sendRelationshipNotificationPm(string $action, $initiatingUser, $receiv
         'language_file' => 'itscomplicated',
     );
 
-    return \send_pm($pm, -1);
+    if (\itscomplicated\getSettingValue('notification_initiator_as_pm_sender')) {
+        $fromUserId = $initiatingUser['uid'];
+    } else {
+        // "MyBB Engine"
+        $fromUserId = -1;
+    }
+
+    return \send_pm($pm, $fromUserId);
 }
 
 function getRelationshipRequestConditionResultsForUsers(array $initiatingUser, array $receivingUser)

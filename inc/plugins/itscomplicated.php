@@ -220,6 +220,12 @@ function itscomplicated_activate()
                 'optionscode' => 'numeric',
                 'value'       => '1',
             ],
+            'notification_initiator_as_pm_sender' => [
+                'title'       => 'Notifications: Send PMs from Real Users',
+                'description' => 'Choose whether to mark action initiators as authors of notification Private Messages.',
+                'optionscode' => 'yesno',
+                'value'       => '0',
+            ],
             'notification_relationship_ended' => [
                 'title'       => 'Notifications: Relationship Ended',
                 'description' => 'Choose whether to send notifications when relationship is ended.',
