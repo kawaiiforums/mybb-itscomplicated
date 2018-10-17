@@ -66,7 +66,7 @@ function member_profile_end(): void
 
                 eval('$avatar = "' . \itscomplicated\tpl('relationships_profile_relationship_avatar') . '";');
 
-                $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+                $username = \itscomplicated\getFormattedProfileLink($relationshipUser);
 
                 $relationshipTypeTitle = \htmlspecialchars_uni(
                     $lang->parse($userRelationship['title'])
@@ -214,7 +214,7 @@ function usercp_start(): void
                 if (count($relationshipUsers) == 1) {
                     $relationshipUser = end($relationshipUsers);
 
-                    $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+                    $username = \itscomplicated\getFormattedProfileLink($relationshipUser);
 
                     $relationshipTypeTitle = \htmlspecialchars_uni(
                         $lang->parse($userRelationship['title'])
@@ -257,7 +257,7 @@ function usercp_start(): void
                     if (count($relationshipUsers) == 1) {
                         $relationshipUser = end($relationshipUsers);
 
-                        $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+                        $username = \itscomplicated\getFormattedProfileLink($relationshipUser);
 
                         $relationshipTypeTitle = \htmlspecialchars_uni(
                             $lang->parse($userRelationship['title'])
@@ -286,7 +286,7 @@ function usercp_start(): void
                     if (count($relationshipUsers) == 1) {
                         $relationshipUser = end($relationshipUsers);
 
-                        $username = \build_profile_link($relationshipUser['username'], $relationshipUser['user_id']);
+                        $username = \itscomplicated\getFormattedProfileLink($relationshipUser);
 
                         $relationshipTypeTitle = \htmlspecialchars_uni(
                             $lang->parse($userRelationship['title'])

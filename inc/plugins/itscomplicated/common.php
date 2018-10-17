@@ -209,3 +209,11 @@ function loadPluginLibrary(): void
         require_once PLUGINLIBRARY;
     }
 }
+
+function getFormattedProfileLink(array $user): string
+{
+    return \build_profile_link(
+        \format_name($user['username'], $user['usergroup'], $user['displaygroup']),
+        $user['uid'] ?? $user['user_id']
+    );
+}
