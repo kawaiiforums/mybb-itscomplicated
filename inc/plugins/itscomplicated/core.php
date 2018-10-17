@@ -157,6 +157,8 @@ function getRelationshipRequestConditionResultsForUsers(array $initiatingUser, a
         'initiating_user_under_limit' => \itscomplicated\activeUserRelationshipsUnderLimit($initiatingUser['uid']),
         'receiving_user_under_limit' => \itscomplicated\activeUserRelationshipsUnderLimit($receivingUser['uid']),
         'initiating_user_on_ignored_list' => !\itscomplicated\userOnIgnoreList($initiatingUser['uid'], $receivingUser['uid']),
+        'initiating_user_not_allowed' => $initiatingUser['itscomplicated_allow_relationships'],
+        'receiving_user_not_allowed' => $receivingUser['itscomplicated_allow_relationships'],
     ];
 }
 

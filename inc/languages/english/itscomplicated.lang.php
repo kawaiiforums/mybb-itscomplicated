@@ -31,6 +31,8 @@ $l['itscomplicated_relationships_error_initiating_user_in_group'] = 'You cannot 
 $l['itscomplicated_relationships_error_receiving_user_in_group'] = 'The selected user cannot currently accept relationship requests.';
 $l['itscomplicated_relationships_error_initiating_user_under_limit'] = 'You cannot request a relationship because your relationships limit has been reached.';
 $l['itscomplicated_relationships_error_receiving_user_under_limit'] = 'You cannot request a relationship with selected user because their relationships limit has been reached.';
+$l['itscomplicated_relationships_error_initiating_user_not_allowed'] = 'You cannot currently send or receive relationship requests.';
+$l['itscomplicated_relationships_error_receiving_user_not_allowed'] = 'The selected user cannot currently accept relationship requests.';
 
 $l['itscomplicated_relationships_error_initiating_user_on_ignored_list'] = 'You cannot request a relationship with selected user because you\'re on their ignore list.';
 
@@ -38,13 +40,19 @@ $l['itscomplicated_relationships_error_initiating_user_on_ignored_list'] = 'You 
 $l['itscomplicated_relationships_notification_request_received'] = 'Relationship request received';
 $l['itscomplicated_relationships_notification_request_received_message'] = '{1} has sent you a relationship request: {2}.
 
-You can view your pending requests from User Control Panel -> Relationships.';
+You can view your pending requests from User Control Panel -> Relationships.
+
+This is an automated message, please do not reply.';
 
 $l['itscomplicated_relationships_notification_request_accepted'] = 'Relationship request accepted';
-$l['itscomplicated_relationships_notification_request_accepted_message'] = '{1} has accepted your relationship request: {2}.';
+$l['itscomplicated_relationships_notification_request_accepted_message'] = '{1} has accepted your relationship request: {2}.
+
+This is an automated message, please do not reply.';
 
 $l['itscomplicated_relationships_notification_relationship_ended'] = 'Relationship ended';
-$l['itscomplicated_relationships_notification_relationship_ended_message'] = '{1} has ended a relationship with you: {2}.';
+$l['itscomplicated_relationships_notification_relationship_ended_message'] = '{1} has ended a relationship with you: {2}.
+
+This is an automated message, please do not reply.';
 
 $l['itscomplicated_relationships_in_relationship_with'] = '{1} ({2}) since {3}';
 

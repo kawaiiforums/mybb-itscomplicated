@@ -209,3 +209,31 @@ function admin_user_users_merge_commit(): void
 
     \itscomplicated\deleteUserRelationships($source_user);
 }
+
+function admin_user_users_edit_moderator_options(): void
+{
+    global $mybb, $lang, $form;
+
+    $lang->load('itscomplicated');
+
+    $form_container = new \FormContainer($lang->itscomplicated_admin_relationships);
+
+    $options = '<div class="user_settings_bit">';
+    $options .= $form->generate_check_box('itscomplicated_allow_relationships', 1, $lang->itscomplicated_relationships_user_allow, array("checked" => $mybb->input['itscomplicated_allow_relationships']));
+    $options .= '</div>';
+
+    $form_container->output_row(
+        $lang->itscomplicated_admin_relationships,
+        '',
+        $options
+    );
+
+    $form_container->end();
+}
+
+function admin_user_users_edit_commit_start(): void
+{
+    global $mybb, $extra_user_updates;
+
+    $extra_user_updates['itscomplicated_allow_relationships'] = $mybb->get_input('itscomplicated_allow_relationships', \MyBB::INPUT_INT);
+}

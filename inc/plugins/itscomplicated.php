@@ -40,6 +40,7 @@ function itscomplicated_install()
 
     \itscomplicated\loadPluginLibrary();
 
+    // database
     switch ($db->type) {
         case 'pgsql':
             $db->write_query("
@@ -142,6 +143,18 @@ function itscomplicated_install()
             break;
     }
 
+    if (!$db->field_exists('itscomplicated_allow_relationships', 'users')) {
+        switch ($db->type) {
+            case 'pgsql':
+            case 'sqlite':
+                $db->add_column('users', 'itscomplicated_allow_relationships', "integer NOT NULL DEFAULT 1");
+                break;
+            default:
+                $db->add_column('users', 'itscomplicated_allow_relationships', "int(11) NOT NULL DEFAULT 1");
+                break;
+        }
+    }
+
     $defaultRelatioshipTypeTitles = [
         'relationship' => '<lang:itscomplicated_relationships_type_relationship>',
         'civilunion' => '<lang:itscomplicated_relationships_type_civilunion>',
@@ -181,6 +194,10 @@ function itscomplicated_uninstall()
         'itscomplicated_relationships',
         'itscomplicated_relationships_users',
     ], true, true);
+
+    if ($db->field_exists('itscomplicated_allow_relationships', 'users')) {
+        $db->drop_column('users', 'itscomplicated_allow_relationships');
+    }
 
     // settings
     $PL->settings_delete('itscomplicated', true);

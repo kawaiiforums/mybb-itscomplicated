@@ -23,3 +23,5 @@ $l['itscomplicated_admin_relationships_types_updated'] = 'Successfully updated r
 $l['itscomplicated_admin_relationships_types_delete_confirm_title'] = 'Confirm relationship type removal';
 $l['itscomplicated_admin_relationships_types_delete_confirm_message'] = 'Are you sure you want to remove selected relationship type?';
 $l['itscomplicated_admin_relationships_types_deleted'] = 'Successfully deleted relationship type.';
+
+$l['itscomplicated_relationships_user_allow'] = 'Allow to Send and Receive Requests';
