@@ -1,3 +1,3 @@
 <tr>
-    <td class="trow1" style="text-align: center;" colspan="3">{$lang->itscomplicated_relationships_none}</td>
+    <td class="trow1" style="text-align: center;" colspan="4">{$lang->itscomplicated_relationships_none}</td>
 </tr>
