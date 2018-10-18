@@ -108,6 +108,7 @@ function usercp_start(): void
         \add_breadcrumb($lang->itscomplicated_relationships);
 
         $errors = [];
+        $message = null;
 
         if ($mybb->get_input('create_request')) {
             if (\verify_post_check($mybb->get_input('my_post_key'))) {
@@ -120,7 +121,7 @@ function usercp_start(): void
 
                     if ($receivingUser) {
                         $firstFalseCondition = \itscomplicated\getFirstFalseCondition(
-                            \itscomplicated\getRelationshipRequestConditionResultsForUsers($mybb->user, $receivingUser)
+                            \itscomplicated\getRelationshipRequestConditionResultsForUsers($mybb->user, $receivingUser, $relationshipType)
                         );
 
                         if ($firstFalseCondition) {
@@ -151,6 +152,7 @@ function usercp_start(): void
         } elseif ($mybb->get_input('accept_request')) {
             if (\verify_post_check($mybb->get_input('my_post_key'))) {
                 $relationship = \itscomplicated\getRelationshipById($mybb->get_input('accept_request', \MyBB::INPUT_INT));
+                $relationshipType = \itscomplicated\getRelationshipTypeById($relationship['type_id']);
 
                 if ($relationship && $relationship['active'] == 0 && $relationship['date_start'] == 0) {
                     $relationshipUsers = \itscomplicated\getRelationshipUsers($relationship['id']);
@@ -164,7 +166,7 @@ function usercp_start(): void
 
                             if (count($receivingUsers) == 1) {
                                 $firstFalseCondition = \itscomplicated\getFirstFalseCondition(
-                                    \itscomplicated\getRelationshipRequestConditionResultsForUsers($mybb->user, end($receivingUsers))
+                                    \itscomplicated\getRelationshipRequestConditionResultsForUsers(end($receivingUsers), $mybb->user, $relationshipType)
                                 );
 
                                 if ($firstFalseCondition) {
@@ -236,15 +238,20 @@ function usercp_start(): void
             $relationshipTypes = \itscomplicated\getRelationshipTypes();
 
             foreach ($relationshipTypes as $relationshipType) {
-                $relationshipTypeTitle = \htmlspecialchars_uni(
-                    $lang->parse($relationshipType['title'])
-                );
+                if (\itscomplicated\userInRelationshipTypeGroup($mybb->user, $relationshipType)) {
+                    $relationshipTypeTitle = \htmlspecialchars_uni(
+                        $lang->parse($relationshipType['title'])
+                    );
 
-                eval('$relationshipTypeSelectOptions .= "' . \itscomplicated\tpl('relationships_usercp_relationship_type_option') . '";');
+                    eval('$relationshipTypeSelectOptions .= "' . \itscomplicated\tpl('relationships_usercp_relationship_type_option') . '";');
+                }
             }
 
-            eval('$createRelationship = "' . \itscomplicated\tpl('relationships_usercp_create') . '";');
-
+            if ($relationshipTypeSelectOptions !== null) {
+                eval('$createRelationship = "' . \itscomplicated\tpl('relationships_usercp_create') . '";');
+            } else {
+                $message = $lang->itscomplicated_relationships_error_no_types;
+            }
 
             if ($userRelationships['requests_received']) {
                 $receivedRequests = null;
@@ -303,8 +310,6 @@ function usercp_start(): void
             }
 
             eval('$relationshipRequests = "' . \itscomplicated\tpl('relationships_usercp_requests') . '";');
-
-            $message = null;
         } else {
             $createRelationship = null;
             $relationshipRequests = null;

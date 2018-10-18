@@ -9,6 +9,8 @@ function addRelationshipType(array $data): int
     $db->insert_query('itscomplicated_relationship_types', [
         'name' => $db->escape_string($data['name']),
         'title' => $db->escape_string($data['title']),
+        'groups' => $db->escape_string($data['groups']),
+        'groups_initiator_only' => (int)$data['groups_initiator_only'],
     ]);
 
     if ($db->type == 'pgsql') {
@@ -59,6 +61,14 @@ function updateRelationshipTypeById(int $id, array $data): bool
 
     if (isset($data['title'])) {
         $updates['title'] = $db->escape_string($data['title']);
+    }
+
+    if (isset($data['groups'])) {
+        $updates['groups'] = $db->escape_string($data['groups']);
+    }
+
+    if (isset($data['groups_initiator_only'])) {
+        $updates['groups_initiator_only'] = (int)$data['groups_initiator_only'];
     }
 
     return (bool)$db->update_query('itscomplicated_relationship_types', $updates, 'id=' . (int)$id);

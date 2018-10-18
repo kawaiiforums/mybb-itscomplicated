@@ -217,3 +217,66 @@ function getFormattedProfileLink(array $user): string
         $user['uid'] ?? $user['user_id']
     );
 }
+
+
+function outputGroupSelect(\DefaultForm $form, string $elementName, string $value): string
+{
+    global $mybb, $lang;
+
+    if ($value != '' && $value != -1) {
+        $selected_values = array_map('intval', explode(',', $value));
+    } else {
+        $selected_values = '';
+    }
+
+    $group_checked = [
+        'all' => '',
+        'custom' => '',
+        'none' => ''
+    ];
+
+    if ($value == -1) {
+        $group_checked['all'] = 'checked="checked"';
+    } elseif ($value != '') {
+        $group_checked['custom'] = 'checked="checked"';
+    } else {
+        $group_checked['none'] = 'checked="checked"';
+    }
+
+    $setting_code = '
+    <dl style="margin-top: 0; margin-bottom: 0; width: 100%">
+        <dt>
+            <label style="display: block;">
+                <input type="radio" name="' . $elementName . '" value="-1" ' . $group_checked['all'] . ' class="' . $elementName . '_forums_groups_check" onclick="checkAction(\'' . $elementName . '\');" style="vertical-align: middle;" />
+                <strong>' . $lang->all_groups . '</strong>
+            </label>
+        </dt>
+        <dt>
+            <label style="display: block;">
+                <input type="radio" name="' . $elementName . '" value="custom" ' . $group_checked['custom'] . ' class="' . $elementName . '_forums_groups_check" onclick="checkAction(\'' . $elementName . '\');" style="vertical-align: middle;" />
+                <strong>' . $lang->select_groups . '</strong>
+            </label>
+        </dt>
+        <dd style="margin-top: 4px;" id="' . $elementName . '_forums_groups_custom" class="' . $elementName . '_forums_groups">
+            <table cellpadding="4">
+                <tr>
+                    <td valign="top"><small>' . $lang->groups_colon . '</small></td>
+                    <td>' . $form->generate_group_select($elementName . '[]', $selected_values, ['id' => $elementName, 'multiple' => true, 'size' => 5]) . '</td>
+                </tr>
+            </table>
+        </dd>
+        <dt>
+            <label style="display: block;">
+                <input type="radio" name="' . $elementName . '" value="" ' . $group_checked['none'] . ' class="' . $elementName . '_forums_groups_check" onclick="checkAction(\'' . $elementName . '\');" style="vertical-align: middle;" />
+                <strong>' . $lang->none . '</strong>
+            </label>
+        </dt>
+    </dl>
+    
+    <script type="text/javascript">
+        checkAction("' . $elementName . '");
+    </script>
+    ';
+
+    return $setting_code;
+}

@@ -12,6 +12,10 @@ $l['itscomplicated_admin_relationships_types_description'] = 'Here you can manag
 $l['itscomplicated_admin_relationships_name'] = 'Name';
 $l['itscomplicated_admin_relationships_name_description'] = 'A simplified type ID (letters and numbers only).';
 $l['itscomplicated_admin_relationships_title'] = 'Title';
+$l['itscomplicated_admin_relationships_groups'] = 'Allowed Groups';
+$l['itscomplicated_admin_relationships_groups_description'] = 'Choose which user groups are allowed to be part of this relationship.';
+$l['itscomplicated_admin_relationships_groups_initiator_only'] = 'Allowed Groups: Initiating User Only';
+$l['itscomplicated_admin_relationships_groups_initiator_only_description'] = 'Choose whether the above requirement should apply to request initiators only rather than both users.';
 $l['itscomplicated_admin_relationships_submit'] = 'Submit';
 
 $l['itscomplicated_admin_relationships_types_empty'] = 'No relationship types added.';

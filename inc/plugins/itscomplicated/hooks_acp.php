@@ -23,10 +23,12 @@ function admin_load()
         ];
 
         if ($mybb->input['action'] == 'types' || empty($mybb->input['action'])) {
-            if ($mybb->request_method == 'post' && $mybb->get_input('add') && !empty(trim($mybb->get_input('title')))) {
+            if ($mybb->request_method == 'post' && $mybb->get_input('add') && !empty(trim($mybb->get_input('title'))) && isset($mybb->input['groups'])) {
                 \itscomplicated\addRelationshipType([
                     'name' => $mybb->get_input('name'),
                     'title' => $mybb->get_input('title'),
+                    'groups' => \itscomplicated\filterGroupSelectInput($mybb->input['groups']),
+                    'groups_initiator_only' => $mybb->get_input('groups_initiator_only', \MyBB::INPUT_INT),
                 ]);
                 \flash_message($lang->itscomplicated_admin_relationships_types_added, 'success');
                 \admin_redirect($pageUrl . '&action=types');
@@ -59,12 +61,16 @@ function admin_load()
                         \itscomplicated\updateRelationshipTypeById($relationshipType['id'], [
                             'name' => $mybb->get_input('name'),
                             'title' => $mybb->get_input('title'),
+                            'groups' => \itscomplicated\filterGroupSelectInput($mybb->input['groups']),
+                            'groups_initiator_only' => $mybb->get_input('groups_initiator_only', \MyBB::INPUT_INT),
                         ]);
                         \flash_message($lang->itscomplicated_admin_relationships_types_updated, 'success');
                         \admin_redirect($pageUrl . '&action=types');
                     } else {
                         $page->output_header($lang->itscomplicated_admin_relationships_types);
                         $page->output_nav_tabs($sub_tabs, 'types');
+
+                        \print_selection_javascript();
 
                         $form = new \Form($pageUrl . '&action=types&edit=' . (int)$relationshipType['id'], 'post');
 
@@ -79,6 +85,16 @@ function admin_load()
                             '',
                             $form->generate_text_box('title', $relationshipType['title'])
                         );
+                        $form_container->output_row(
+                            $lang->itscomplicated_admin_relationships_groups,
+                            $lang->itscomplicated_admin_relationships_groups_description,
+                            \itscomplicated\outputGroupSelect($form, 'groups', $relationshipType['groups'])
+                        );
+                        $form_container->output_row(
+                            $lang->itscomplicated_admin_relationships_groups_initiator_only,
+                            $lang->itscomplicated_admin_relationships_groups_initiator_only_description,
+                            $form->generate_yes_no_radio('groups_initiator_only', $relationshipType['groups_initiator_only'])
+                        );
                         $form_container->end();
 
                         $buttons = null;
@@ -90,7 +106,6 @@ function admin_load()
             } else {
                 $page->output_header($lang->itscomplicated_admin_relationships_types);
                 $page->output_nav_tabs($sub_tabs, 'types');
-
 
                 $itemsNum = $db->fetch_field(
                     $db->query("
@@ -156,6 +171,8 @@ function admin_load()
                 echo '<br />';
 
                 // add form
+                \print_selection_javascript();
+
                 $form = new \Form($pageUrl . '&amp;action=types&amp;add=1', 'post');
 
                 $form_container = new \FormContainer($lang->itscomplicated_admin_relationships_types_add);
@@ -168,6 +185,16 @@ function admin_load()
                     $lang->itscomplicated_admin_relationships_title,
                     '',
                     $form->generate_text_box('title')
+                );
+                $form_container->output_row(
+                    $lang->itscomplicated_admin_relationships_groups,
+                    $lang->itscomplicated_admin_relationships_groups_description,
+                    \itscomplicated\outputGroupSelect($form, 'groups', '')
+                );
+                $form_container->output_row(
+                    $lang->itscomplicated_admin_relationships_groups_initiator_only,
+                    $lang->itscomplicated_admin_relationships_groups_initiator_only_description,
+                    $form->generate_yes_no_radio('groups_initiator_only')
                 );
                 $form_container->end();
 

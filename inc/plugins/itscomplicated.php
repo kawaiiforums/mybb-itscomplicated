@@ -48,6 +48,8 @@ function itscomplicated_install()
                     id serial,
                     name text NOT NULL,
                     title text NOT NULL,
+                    groups text NOT NULL,
+                    groups_initiator_only integer NOT NULL,
                     PRIMARY KEY (id)
                 )
             ");
@@ -80,6 +82,8 @@ function itscomplicated_install()
                     id integer,
                     name text NOT NULL,
                     title text NOT NULL,
+                    groups text NOT NULL,
+                    groups_initiator_only integer NOT NULL,
                     PRIMARY KEY (id)
                 )
             ");
@@ -112,6 +116,8 @@ function itscomplicated_install()
                     `id` int(11) NOT NULL auto_increment,
                     `name` varchar(100) NOT NULL,
                     `title` varchar(100) NOT NULL,
+                    `groups` text NOT NULL,
+                    `groups_initiator_only` int(1) NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB " . $db->build_create_table_collation() . "
             ");
@@ -150,7 +156,7 @@ function itscomplicated_install()
                 $db->add_column('users', 'itscomplicated_allow_relationships', "integer NOT NULL DEFAULT 1");
                 break;
             default:
-                $db->add_column('users', 'itscomplicated_allow_relationships', "int(11) NOT NULL DEFAULT 1");
+                $db->add_column('users', 'itscomplicated_allow_relationships', "int(1) NOT NULL DEFAULT 1");
                 break;
         }
     }
@@ -173,6 +179,8 @@ function itscomplicated_install()
             \itscomplicated\addRelationshipType([
                 'name' => $name,
                 'title' => $title,
+                'groups' => -1,
+                'groups_initiator_only' => 0,
             ]);
         }
     }

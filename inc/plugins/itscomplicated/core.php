@@ -148,12 +148,14 @@ function sendRelationshipNotificationPm(string $action, $initiatingUser, $receiv
     return \send_pm($pm, $fromUserId);
 }
 
-function getRelationshipRequestConditionResultsForUsers(array $initiatingUser, array $receivingUser)
+function getRelationshipRequestConditionResultsForUsers(array $initiatingUser, array $receivingUser, array $relationshipType)
 {
     return [
         'not_with_self' => $initiatingUser['uid'] != $receivingUser['uid'],
         'initiating_user_in_group' => \itscomplicated\userInRelationshipGroup($initiatingUser),
         'receiving_user_in_group' => \itscomplicated\userInRelationshipGroup($receivingUser),
+        'initiating_user_in_type_group' => \itscomplicated\userInRelationshipTypeGroup($initiatingUser, $relationshipType),
+        'receiving_user_in_type_group' => $relationshipType['groups_initiator_only'] == 1 || \itscomplicated\userInRelationshipTypeGroup($receivingUser, $relationshipType),
         'initiating_user_under_limit' => \itscomplicated\activeUserRelationshipsUnderLimit($initiatingUser['uid']),
         'receiving_user_under_limit' => \itscomplicated\activeUserRelationshipsUnderLimit($receivingUser['uid']),
         'initiating_user_on_ignored_list' => !\itscomplicated\userOnIgnoreList($initiatingUser['uid'], $receivingUser['uid']),
@@ -173,14 +175,26 @@ function getFirstFalseCondition(array $conditionResults): ?string
     }
 }
 
-function userInRelationshipGroup($user): bool
+function userInAnyGroup($user, array $userGroups): bool
 {
-    $userGroups = \itscomplicated\getCsvSettingValues('relationship_groups');
-
     return (
         in_array(-1, $userGroups) ||
         count(\is_member($userGroups, $user)) != 0
     );
+}
+
+function userInRelationshipGroup($user): bool
+{
+    $userGroups = \itscomplicated\getCsvSettingValues('relationship_groups');
+
+    return \itscomplicated\userInAnyGroup($user, $userGroups);
+}
+
+function userInRelationshipTypeGroup($user, array $relationshipType): bool
+{
+    $userGroups = array_filter(explode(',', $relationshipType['groups']));
+
+    return \itscomplicated\userInAnyGroup($user, $userGroups);
 }
 
 function activeUserRelationshipsUnderLimit(int $userId): bool
@@ -230,4 +244,23 @@ function getUserRelationshipsWithTypesByState(int $userId): array
     }
 
     return $userRelationshipsWithTypesByState;
+}
+
+function filterGroupSelectInput($value): string
+{
+    if (is_array($value)) {
+        $value = implode(
+            ',',
+            array_filter(
+                array_map(
+                    'intval',
+                    $value
+                )
+            )
+        );
+    } elseif (!in_array($value, ['', '-1'])) {
+        $value = '';
+    }
+
+    return $value;
 }

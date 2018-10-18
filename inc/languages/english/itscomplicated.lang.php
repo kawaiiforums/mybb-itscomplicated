@@ -25,10 +25,13 @@ $l['itscomplicated_relationships_request_removed'] = 'Relationship request has b
 $l['itscomplicated_relationships_request_accepted'] = 'Relationship request has been accepted.';
 $l['itscomplicated_relationships_relationship_ended'] = 'Relationship has been removed.';
 
+$l['itscomplicated_relationships_error_no_types'] = 'No relationship types available.';
 $l['itscomplicated_relationships_error_user_not_found'] = 'Selected user could not be found.';
 $l['itscomplicated_relationships_error_not_with_self'] = 'You cannot declare relationships with yourself.';
 $l['itscomplicated_relationships_error_initiating_user_in_group'] = 'You cannot currently send or receive relationship requests.';
 $l['itscomplicated_relationships_error_receiving_user_in_group'] = 'The selected user cannot currently accept relationship requests.';
+$l['itscomplicated_relationships_error_initiating_user_in_type_group'] = 'You cannot currently send or receive relationship requests for this type.';
+$l['itscomplicated_relationships_error_receiving_user_in_type_group'] = 'The selected user cannot currently accept relationship requests for this type.';
 $l['itscomplicated_relationships_error_initiating_user_under_limit'] = 'You cannot request a relationship because your relationships limit has been reached.';
 $l['itscomplicated_relationships_error_receiving_user_under_limit'] = 'You cannot request a relationship with selected user because their relationships limit has been reached.';
 $l['itscomplicated_relationships_error_initiating_user_not_allowed'] = 'You cannot currently send or receive relationship requests.';
