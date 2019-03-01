@@ -1,5 +1,5 @@
 # It's Complicated 
-Allows users to define relationships with one another.
+A MyBB extension that allows users to define relationships with one another.
 
 ![itscomplicated](https://user-images.githubusercontent.com/74533/46964836-124abc80-d0a1-11e8-9c2a-1c85845a1fb0.png)
 
