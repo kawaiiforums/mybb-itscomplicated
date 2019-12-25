@@ -332,7 +332,7 @@ function usercp_menu31(): void
     eval('$usercpmenu .= "' . \itscomplicated\tpl('relationships_usercp_menu') . '";');
 }
 
-function datahandler_user_delete_end(\UserDataHandler $userDataHandler): void
+function datahandler_user_delete_start(\UserDataHandler $userDataHandler): void
 {
     foreach ($userDataHandler->delete_uids as $userId) {
         \itscomplicated\deleteUserRelationships($userId);
